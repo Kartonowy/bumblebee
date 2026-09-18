@@ -1,15 +1,9 @@
 <script lang="ts">
+    import type { Card } from '$lib';
     const { data } = $props();
 
     let search = $state("");
     let hovered: Card | null = $state(null);
-
-    type Card = {
-        name: string | null;
-        url: string | null;
-        rank: string | null;
-        series: string | null;
-    }
 
     // horrid i know
     let cards: { "SSS": Card[], "SS": Card[], "S": Card[], "A": Card[], "B": Card[], "C": Card[], "D": Card[], "E": Card[], "F": Card[], [key: string]: Card[] } 

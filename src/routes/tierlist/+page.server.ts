@@ -7,7 +7,8 @@ export const load: PageServerLoad = async () => {
         name: tierlist_cards.name,
         url: tierlist_cards.url,
         rank: tierlist_cards.rank,
-        series: tierlist_cards.series
+        series: tierlist_cards.series,
+        explaination: tierlist_cards.explaination
     }).from(tierlist_cards)
     .groupBy(tierlist_cards.series, tierlist_cards.name);
 

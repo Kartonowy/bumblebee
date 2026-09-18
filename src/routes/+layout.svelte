@@ -45,4 +45,7 @@
 		background: var(--background);
 	}
 
+	nav {
+		padding: 0.5vh 0.5vw 0.5vh 0.5vw;
+	}
 </style>

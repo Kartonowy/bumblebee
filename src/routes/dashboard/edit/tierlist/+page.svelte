@@ -1,12 +1,102 @@
 <script lang='ts'>
 	import { enhance } from '$app/forms';
+    import type { Card } from '$lib';
+
+    const { data } = $props();
+
+    let context_card: Card | null = $state(null);
+    let search = $state("");
+
+    let form_card: Card = $state({
+        name: "",
+        series: "",
+        url: "",
+        rank: "",
+        explaination: ""
+    })
+
+    const handleEdit = () => {
+        form_card = context_card!;
+    }
+    const resetForm = () => { form_card.name = ""; form_card.rank = ""; form_card.series = ""; form_card.url = ""; form_card.explaination = ""; context_card = null}
 </script>
 
+{#snippet card_snippet(card: Card)}
+    <button onmousedown={() => {context_card = card}}><img src={card.url} alt={card.name} class="card"   /></button>
+{/snippet}
+
+<main>
+
+<aside class="first">
 <form method="POST" action="?/addCard" use:enhance>
-    <input type="text" name="cardname" placeholder="Card name" required />
-    <input type="text" name="cardseries" placeholder="Card series" required />
-    <input type="text" name="cardurl" placeholder="Card url" required />
-    <input type="text" name="cardrank" placeholder="Card rank" required />
-    <textarea name="description" placeholder="Description on placement"></textarea>
-    <button>Submit</button>
+    <h4>Add a card</h4>
+    <input type="text" name="cardname" placeholder="Card name" required bind:value={form_card.name}/>
+    <input type="text" name="cardseries" placeholder="Card series" required bind:value={form_card.series}/>
+    <input type="text" name="cardurl" placeholder="Card url" required bind:value={form_card.url}/>
+    <input type="text" name="cardrank" placeholder="Card rank" required bind:value={form_card.rank}/>
+    <textarea name="description" placeholder="Explaination on placement" bind:value={form_card.explaination}></textarea>
+    <button>Submit</button><button onclick={resetForm}>Clear</button>
 </form>
+
+<br>
+
+<input type="text" bind:value={search} >
+
+<br>
+
+{#if context_card != null }
+    <span>
+        {context_card?.name}
+    </span>
+    <button onclick={handleEdit}>Edit</button>
+    <button onclick={ context_card = null }>Unset</button>
+{/if}
+
+</aside>
+
+<aside>
+    {#each data.cards as card}
+        {#if card.name?.toLowerCase().includes(search.toLowerCase()) || card.series?.toLowerCase().includes(search.toLowerCase())}
+            {@render card_snippet(card)}
+        {/if}
+    {/each}
+</aside>
+
+
+</main>
+
+
+<style>
+.first {
+    display: flex;
+    flex-flow: column wrap;
+}
+.first > input, .first span {
+    width: 20%;
+    padding: 0 0.2vw 0 0.2vw;
+}
+    main {
+        display: flex;
+        flex-flow: row wrap;
+    }
+    form {
+        display: flex;
+        flex-flow: column wrap;
+        width: 20%;
+        padding-right: 30%;
+    }
+    aside {
+        width: 50%;
+    }
+    button {
+        all: unset;
+    }
+    img {
+        height: 150px;
+        width: 100px;
+        object-fit: cover;
+    }
+    span {
+        border: 1px black solid;
+    }
+</style>
