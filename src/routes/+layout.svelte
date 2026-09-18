@@ -19,9 +19,19 @@
 
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+	:global(:root) {
+		--background: #ffffff;
+		--foreground: #ffffff;
+		--text: #000000;
+		--accent: #000000;
+	}
 	:global {
 		* {
 			font-family: "Fira Code", monospace;
 		}
 	}
+	:global(body) {
+		background: var(--background);
+	}
+
 </style>
