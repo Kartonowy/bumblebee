@@ -2,6 +2,7 @@
     const { data } = $props();
 
     let search = $state("");
+    let hovered: Card | null = $state(null);
 
     type Card = {
         name: string | null;
@@ -21,12 +22,15 @@
 </script>
 
 {#snippet card_snippet(card: Card)}
-    <img src={card.url} alt={card.name} class="card"/>
+    <img src={card.url} alt={card.name} class="card" onmouseenter={() => {hovered = card}} onmouseleave={() => {hovered = null}} />
 {/snippet}
 
 
-<input type="text" bind:value={search} placeholder="search"/>
+<main>
+    <input type="text" bind:value={search} placeholder="search"/> Hovering: {hovered ? `${hovered.name} from ${hovered.series}` : "nothing"}
+</main>
 
+<section>
 {#each ["SSS", "SS", "S", "A", "B", "C", "D", "E", "F"] as tier}
     <h2>Tier: {tier}</h2>
     {#each cards[tier] as card}
@@ -37,9 +41,18 @@
 
     <hr>
 {/each}
+</section>
 
 <style>
     .card {
         height: 130px;
+    }
+    main {
+        position:fixed;
+        background-color: #fff;
+        padding: 10px 25px 10px 25px;
+    }
+    section {
+        padding: 20px 2px 20px 2px;
     }
 </style>
