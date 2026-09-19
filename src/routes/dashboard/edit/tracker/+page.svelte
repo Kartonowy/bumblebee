@@ -42,7 +42,7 @@
     <input type="text" name="mediaurl" autocomplete="off" placeholder="Media url" required bind:value={form_media.url}/>
     <select name="mediatype" bind:value={form_media.type}>
         <option value="anime">anime</option>
-        <option value="book">book</option>
+        <option value="books">books</option>
         <option value="games">games</option>
         <option value="manga">manga</option>
         <option value="movies">movies</option>

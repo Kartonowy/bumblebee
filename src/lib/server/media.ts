@@ -49,7 +49,7 @@ export const editMedia = async (name: string, url: string,  media: Media) => {
 
 export const removeMedia = async (media: Media) => {
     const exists = await db.select().from(tracker)
-        .where(sql`${media.name} = tracker.name AND ${media.year.getFullYear()} = strftime('%Y', tracker.year);`);
+        .where(sql`${media.name} = tracker.name AND ${media.url} = tracker.url`);
 
     if (exists.length < 1) {
         throw new Error("This item was not found.");
@@ -60,7 +60,7 @@ export const removeMedia = async (media: Media) => {
     }
 
     const result = await db.delete(tracker)
-    .where(and(eq(tracker.name, media.name), eq(tracker.year, media.year)))
+    .where(and(eq(tracker.name, media.name), eq(tracker.url, media.url)))
     .returning({ deletedName: tracker.name });
 
     return {
