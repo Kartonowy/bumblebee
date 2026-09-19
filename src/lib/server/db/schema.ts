@@ -1,5 +1,4 @@
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-import { readlink } from 'node:fs';
 
 export const task = sqliteTable('task', {
 	id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
@@ -14,5 +13,12 @@ export const tierlist_cards = sqliteTable('tierlist_cards', {
 	rank: text("rank"),
 	explaination: text("explaination")
 })
+
+export const tracker = sqliteTable('tracker', {
+	type: text({ enum: ["anime", "books", "games", "manga", "movies", "series"] }).notNull(),
+	name: text("name").notNull(),
+	url: text("url").notNull(),
+	year: integer({ mode: 'timestamp' }).notNull()
+});
 
 export *  from './auth.schema';

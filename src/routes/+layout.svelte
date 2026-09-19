@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { resolve } from '$app/paths';
 	import favicon from '$lib/assets/favicon.svg';
 
 	let { data, children } = $props();
@@ -10,11 +11,12 @@
 </svelte:head>
 
 <nav>
-	<a href="/">Home</a>
-	<a href="/tierlist">Tierlist</a>
-	<a href="/dashboard">Dashboard</a>
+	<a href={resolve("/", {})}>Home</a>
+	<a href={resolve("/tierlist", {})} data-sveltekit-preload-data>Tierlist</a>
+	<a href={resolve("/tracker", {})} data-sveltekit-preload-data>Tracker</a>
+	<a href={resolve("/dashboard", {})}>Dashboard</a>
 	{#if data.logged}
-    	<a href="/dashboard/edit/tierlist">Edit tierlist</a>
+    	<a href={resolve("/dashboard/edit/tierlist", {})}>Edit tierlist</a>
 	{/if}
 </nav>
 

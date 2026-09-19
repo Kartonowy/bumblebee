@@ -2,7 +2,6 @@ import type { Card } from "$lib";
 import { and, eq, sql } from "drizzle-orm";
 import { db } from "./db";
 import { tierlist_cards } from "./db/schema";
-import { fail } from "@sveltejs/kit";
 
 export const addCard = async (card: Card) => {
     const exists = await db.select().from(tierlist_cards)
@@ -12,7 +11,7 @@ export const addCard = async (card: Card) => {
         throw new Error("This item was already found.");
     }
 
-    const result = await db.insert(tierlist_cards).values({
+    await db.insert(tierlist_cards).values({
         name: card.name,
         url: card.url,
         series: card.series,
@@ -36,7 +35,7 @@ export const editCard = async (name: string, series: string, card: Card) => {
         throw new Error("More than one item found.");
     }
 
-    const result = await db.update(tierlist_cards).set({
+    await db.update(tierlist_cards).set({
         name: card.name,
         url: card.url,
         series: card.series,

@@ -101,7 +101,7 @@ export const actions: Actions = {
 			}
 		} catch (error: any) {
 			return fail(422, {
-				error: error.message
+				error: error!.message
 			});
 		}
 	},
