@@ -4,7 +4,6 @@
 
     const { data, form } = $props();
 
-    let context_card: Card | null = $state(null);
     let search = $state("");
 
     let form_card: Card = $state({
@@ -18,15 +17,14 @@
     let identifier = $state("");
 
     const handleMode = (_mode: string) => {
-        form_card = context_card!;
         mode = _mode;
         identifier = form_card.name + ";&:" + form_card.series
     }
-    const resetForm = () => { form_card.name = ""; form_card.rank = ""; form_card.series = ""; form_card.url = ""; form_card.explaination = ""; context_card = null; mode = "Add" }
+    const resetForm = () => { form_card.name = ""; form_card.rank = ""; form_card.series = ""; form_card.url = ""; form_card.explaination = "";  mode = "Add" }
 </script>
 
 {#snippet card_snippet(card: Card)}
-    <button onmousedown={() => {context_card = card}}><img src={card.url} alt={card.name} class="card"   /></button>
+    <button onmousedown={() => {form_card = card}}><img src={card.url} alt={card.name} class="card"   /></button>
 {/snippet}
 
 <main>
@@ -48,20 +46,17 @@
 
 </form>
 
-<br>
-
-<input type="text" bind:value={search} >
-
-<br>
-
-{#if context_card != null }
-    <span>
-        {context_card?.name}
-    </span>
-    <button onclick={() => context_card = null }>Unset</button>
+<div>
+    <img src={form_card.url} alt={form_card.name}>
+    <h3>{form_card.name}</h3>
+    <h5>{form_card.series}</h5>
+    <input type="text" class="search" bind:value={search} >
+{#if form_card.name !== "" }
     <button onclick={() => handleMode("Edit")}>Edit</button>
     <button onclick={() => handleMode("Remove")}>Remove</button>
 {/if}
+</div>
+
 
 </aside>
 
@@ -78,13 +73,16 @@
 
 
 <style>
+.search {
+    width: 20%;
+    padding: 0 0.2vw 0 0.2vw;
+}
 .first {
     display: flex;
     flex-flow: column wrap;
 }
-.first > input, .first > span {
-    width: 20%;
-    padding: 0 0.2vw 0 0.2vw;
+.first div, .first form {
+    height: 40vh;
 }
     main {
         display: flex;
