@@ -18,7 +18,7 @@
 
     const handleMode = (_mode: string) => {
         mode = _mode;
-        identifier = form_card.name + ";&:" + form_card.series
+        if (_mode === "Edit") {identifier = form_card.name + ";&:" + form_card.series} else identifier = ""
     }
     const resetForm = () => { form_card.name = ""; form_card.rank = ""; form_card.series = ""; form_card.url = ""; form_card.explaination = "";  mode = "Add" }
 </script>
@@ -34,6 +34,9 @@
     <h4>{mode} a card</h4>
     {#if mode === "Edit"}
     <input type="hidden" name="identifier" bind:value={identifier}/>
+    {/if}
+    {#if mode === "Remove"}
+    <input type="text" name="identifier" bind:value={identifier} placeholder="Are you sure?"/>
     {/if}
     <input type="text" name="cardname" autocomplete="off" placeholder="Card name" required bind:value={form_card.name}/>
     <input type="text" name="cardseries" autocomplete="off" placeholder="Card series" required bind:value={form_card.series}/>

@@ -87,8 +87,14 @@ export const actions: Actions = {
 			rank: data.get("cardrank") as string,
 			explaination: data.get("cardexplaination") as string,
 		};
-		try {
 
+		const confirm = data.get("identifier") as string;
+		if (confirm !== "yes") {
+			return fail(403, {
+				message: "You didn't consent to removing this, try again."
+			})
+		}
+		try {
 			const something = await removeCard(card);
 			return {
 				...something
