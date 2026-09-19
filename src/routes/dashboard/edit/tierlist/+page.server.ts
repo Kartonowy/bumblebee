@@ -1,7 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import type { PageServerLoad } from './$types';
-import { auth } from '$lib/server/auth';
 import { fail } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
 import { tierlist_cards } from '$lib/server/db/schema';import { addCard, editCard, removeCard } from '$lib/server/cards';
@@ -24,12 +23,6 @@ export const load: PageServerLoad = async (event) => {
 };
 
 export const actions: Actions = {
-	signOut: async (event) => {
-		await auth.api.signOut({
-			headers: event.request.headers
-		});
-		return redirect(302, '/');
-	},
 	addCard: async ({ request }) => {
 		const data = await request.formData();
 

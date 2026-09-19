@@ -17,6 +17,7 @@
 	<a href={resolve("/dashboard", {})}>Dashboard</a>
 	{#if data.logged}
     	<a href={resolve("/dashboard/edit/tierlist", {})}>Edit tierlist</a>
+    	<a href={resolve("/dashboard/edit/tracker", {})}>Edit tracker</a>
 	{/if}
 </nav>
 

@@ -64,7 +64,7 @@
 </aside>
 
 <aside>
-    {#each data.cards as card}
+    {#each data.cards as card (card.url)}
         {#if card.name?.toLowerCase().includes(search.toLowerCase()) || card.series?.toLowerCase().includes(search.toLowerCase())}
             {@render card_snippet(card)}
         {/if}

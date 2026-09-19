@@ -8,7 +8,7 @@
 <h2>Media I've consumed this year</h2>
 
 {#snippet media_snippet(media: Media)}
-    <img src={media.url} alt={media.name} />
+    <img src={media.url} alt={media.name} class="card" />
 {/snippet}
 
 {#each ["anime", "books", "games", "manga", "movies", "series"] as category (category)}
@@ -19,3 +19,9 @@
 
     <hr>
 {/each}
+
+<style>
+    .card {
+        height: 200px;
+    }
+</style>
