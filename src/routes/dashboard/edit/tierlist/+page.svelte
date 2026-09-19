@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
     import type { Card } from '$lib';
 
-    const { data } = $props();
+    const { data, form } = $props();
 
     let context_card: Card | null = $state(null);
     let search = $state("");
@@ -13,12 +13,16 @@
         url: "",
         rank: "",
         explaination: ""
-    })
+    });
+    let mode = $state("Add");
+    let identifier = $state("");
 
-    const handleEdit = () => {
+    const handleMode = (_mode: string) => {
         form_card = context_card!;
+        mode = _mode;
+        identifier = form_card.name + ";&:" + form_card.series
     }
-    const resetForm = () => { form_card.name = ""; form_card.rank = ""; form_card.series = ""; form_card.url = ""; form_card.explaination = ""; context_card = null}
+    const resetForm = () => { form_card.name = ""; form_card.rank = ""; form_card.series = ""; form_card.url = ""; form_card.explaination = ""; context_card = null; mode = "Add" }
 </script>
 
 {#snippet card_snippet(card: Card)}
@@ -28,14 +32,20 @@
 <main>
 
 <aside class="first">
-<form method="POST" action="?/addCard" use:enhance>
-    <h4>Add a card</h4>
-    <input type="text" name="cardname" placeholder="Card name" required bind:value={form_card.name}/>
-    <input type="text" name="cardseries" placeholder="Card series" required bind:value={form_card.series}/>
-    <input type="text" name="cardurl" placeholder="Card url" required bind:value={form_card.url}/>
-    <input type="text" name="cardrank" placeholder="Card rank" required bind:value={form_card.rank}/>
-    <textarea name="description" placeholder="Explaination on placement" bind:value={form_card.explaination}></textarea>
+<form method="POST" action={mode === "Edit" ? "?/editCard" : mode === "Remove" ? "?/removeCard" : "?/addCard"} use:enhance>
+    <h4>{mode} a card</h4>
+    {#if mode === "Edit"}
+    <input type="hidden" name="identifier" bind:value={identifier}/>
+    {/if}
+    <input type="text" name="cardname" autocomplete="off" placeholder="Card name" required bind:value={form_card.name}/>
+    <input type="text" name="cardseries" autocomplete="off" placeholder="Card series" required bind:value={form_card.series}/>
+    <input type="text" name="cardurl" autocomplete="off" placeholder="Card url" required bind:value={form_card.url}/>
+    <input type="text" name="cardrank" autocomplete="off" placeholder="Card rank" required bind:value={form_card.rank}/>
+    <textarea name="cardexplaination" autocomplete="off" placeholder="Explaination on placement" bind:value={form_card.explaination}></textarea>
     <button>Submit</button><button onclick={resetForm}>Clear</button>
+
+    <span>Message: {form?.message || form?.error}</span>
+
 </form>
 
 <br>
@@ -48,8 +58,9 @@
     <span>
         {context_card?.name}
     </span>
-    <button onclick={handleEdit}>Edit</button>
-    <button onclick={ context_card = null }>Unset</button>
+    <button onclick={() => context_card = null }>Unset</button>
+    <button onclick={() => handleMode("Edit")}>Edit</button>
+    <button onclick={() => handleMode("Remove")}>Remove</button>
 {/if}
 
 </aside>
@@ -71,7 +82,7 @@
     display: flex;
     flex-flow: column wrap;
 }
-.first > input, .first span {
+.first > input, .first > span {
     width: 20%;
     padding: 0 0.2vw 0 0.2vw;
 }

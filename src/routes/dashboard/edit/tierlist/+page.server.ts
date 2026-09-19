@@ -2,6 +2,10 @@ import { redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import type { PageServerLoad } from './$types';
 import { auth } from '$lib/server/auth';
+import { fail } from '@sveltejs/kit';
+import { db } from '$lib/server/db';
+import { tierlist_cards } from '$lib/server/db/schema';import { addCard, editCard, removeCard } from '$lib/server/cards';
+import type { Card } from '$lib';
 
 export const load: PageServerLoad = async (event) => {
 	if (!event.locals.user) {
@@ -25,7 +29,74 @@ export const actions: Actions = {
 			headers: event.request.headers
 		});
 		return redirect(302, '/');
-	}
+	},
+	addCard: async ({ request }) => {
+		const data = await request.formData();
+
+		const card: Card = {
+			name: data.get("cardname") as string,
+			series: data.get("cardseries") as string,
+			url: data.get("cardurl") as string,
+			rank: data.get("cardrank") as string,
+			explaination: data.get("cardexplaination") as string,
+		};
+		try {
+
+			const something = await addCard(card);
+			return {
+				...something
+			}
+		} catch (error: any) {
+			return fail(422, {
+				error: error.message
+			});
+		}
+	},
+
+	editCard: async ({ request }) => {
+		const data = await request.formData();
+		const identifier = data.get("identifier") as string;
+		const [name, series] = identifier.split(";&:");
+
+		const card: Card = {
+			name: data.get("cardname") as string,
+			series: data.get("cardseries") as string,
+			url: data.get("cardurl") as string,
+			rank: data.get("cardrank") as string,
+			explaination: data.get("cardexplaination") as string,
+		};
+		try {
+
+			const something = await editCard(name, series, card);
+			return {
+				...something
+			}
+		} catch (error: any) {
+			return fail(422, {
+				error: error.message
+			});
+		}
+	},
+	removeCard: async ({ request }) => {
+		const data = await request.formData();
+
+		const card: Card = {
+			name: data.get("cardname") as string,
+			series: data.get("cardseries") as string,
+			url: data.get("cardurl") as string,
+			rank: data.get("cardrank") as string,
+			explaination: data.get("cardexplaination") as string,
+		};
+		try {
+
+			const something = await removeCard(card);
+			return {
+				...something
+			}
+		} catch (error: any) {
+			return fail(422, {
+				error: error.message
+			});
+		}
+	},
 };
-import { db } from '$lib/server/db';
-import { tierlist_cards } from '$lib/server/db/schema';

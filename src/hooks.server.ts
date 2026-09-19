@@ -11,7 +11,9 @@ const handleBetterAuth: Handle = async ({ event, resolve }) => {
 		event.locals.user = session.user;
 	}
 
-	return svelteKitHandler({ event, resolve, auth, building });
+	const response = await svelteKitHandler({ event, resolve, auth, building });
+	response.headers.set('Cross-Origin-Resource-Policy', 'cross-origin')
+	return response 
 };
 
 export const handle: Handle = handleBetterAuth;
