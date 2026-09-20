@@ -22,7 +22,7 @@ export const actions: Actions = {
 
 		const type = data.get("mediatype") as string;
 
-		if (!(["anime" , "books" , "games" , "manga" , "movies" , "series"].includes(type))) {
+		if (!(["anime", "books", "games", "manga", "movies", "series"].includes(type))) {
 			return fail(422, "wrong type")
 		}
 
@@ -52,8 +52,8 @@ export const actions: Actions = {
 
 		const type = data.get("mediatype") as string;
 
-		if (!(type in ["anime" , "books" , "games" , "manga" , "movies" , "series"])) {
-				return fail(422, "wrong type")
+		if (!(type in ["anime", "books", "games", "manga", "movies", "series"])) {
+			return fail(422, "wrong type")
 		}
 
 		const media: Media = {
