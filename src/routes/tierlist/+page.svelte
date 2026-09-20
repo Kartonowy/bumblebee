@@ -27,11 +27,13 @@
 <section>
 {#each ["SSS", "SS", "S", "A", "B", "C", "D", "E", "F"] as tier (tier)}
     <h2>Tier: {tier}</h2>
+    <div class="shelf">
     {#each cards[tier] as card (card.url)}
         {#if card.name?.toLowerCase().includes(search.toLowerCase()) || card.series?.toLowerCase().includes(search.toLowerCase())}
             {@render card_snippet(card)}
         {/if}
     {/each}
+    </div>
 
     <hr>
 {/each}
@@ -54,5 +56,10 @@ If you want to discuss any of the placements or suggest your own characters to a
     }
     section {
         padding: 20px 2px 20px 2px;
+    }
+    .shelf {
+        display:flex;
+        flex-flow: row wrap;
+        width: 100%;
     }
 </style>
