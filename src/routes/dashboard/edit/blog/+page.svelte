@@ -1,10 +1,11 @@
 <script lang='ts'>
 	import { enhance } from '$app/forms';
-    import type { Post } from '$lib';
+    import { defaultPost, type Post } from '$lib';
 
     const { data, form } = $props();
 
     let form_post: Post = $state({
+		...defaultPost,
         title: "",
         content: "",
         language: "en",

@@ -4,7 +4,7 @@ import type { PageServerLoad } from './$types';
 import { fail } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
 import { posts } from '$lib/server/db/schema';
-import type {  Post } from '$lib';
+import {  defaultPost, type Post } from '$lib';
 import { addPost, editPost, removePost } from '$lib/server/posts';
 import { getTableColumns, sql } from 'drizzle-orm';
 
@@ -34,11 +34,12 @@ export const actions: Actions = {
         // TODO: CONVERT MARKDOWN INTO HTML
 
 		const post: Post = {
+			...defaultPost,
 			title: data.get("posttitle") as string,
 			content: data.get("postcontent") as string,
 			language: lang as "en" | "pl" | "jp",
             tags: (data.get("posttags") as string).split(",").map((e) => e.trim()),
-			published: data.get("postpublished") as string === 'on'
+			published: data.get("postpublished") as string === 'on',
 		};
 
 		try {
@@ -70,11 +71,12 @@ export const actions: Actions = {
 		}
 
 		const post: Post = {
+			...defaultPost,
 			title: data.get("posttitle") as string,
 			content: data.get("postcontent") as string,
 			language: lang as "en" | "pl" | "jp",
             tags: (data.get("posttags") as string).split(",").map((e) => e.trim()),
-			published: data.get("postpublished") as string === 'true'
+			published: data.get("postpublished") as string === 'on'
 		};
 
 		try {

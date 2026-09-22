@@ -14,9 +14,18 @@ export type Media = {
 }
 
 export type Post = {
+	rowid: number | null | unknown,
 	title: string,
 	content: string,
 	language: "en" | "pl" | "jp",
 	tags: string[] | null,
-	published: boolean | null
+	published: boolean | null,
+	publishedAt: string | null,
+	lastEditedAt: string | null,
+}
+
+export const defaultPost = {
+	rowid: null,
+	publishedAt: null,
+	lastEditedAt: null
 }
