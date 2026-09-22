@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { resolve } from '$app/paths';
     import type { Post } from '$lib';
 
     const { data } = $props();
@@ -9,10 +10,14 @@
 
 {#snippet post_snippet(post: Post)}
     <div>
-        <h3>{post.title} <span class="language">{post.language}</span> {new Date(post.publishedAt!).toLocaleDateString("pl-PL")}</h3>
+        <span>
+            <a href={resolve(`/blog/${post.rowid}`, {})}><h3>{post.title}</h3></a>
+            <span>—  {new Date(post.publishedAt!).toLocaleDateString("pl-PL")}</span>
+        </span>
         <p>{post.content.split(" ").slice(0, 37).join(" ")}...</p>
         <span>
-            tags: {#each post.tags as tag (tag)} <span>{tag}</span> {/each}
+            lang: <span class="language">{post.language}</span>
+            tags: {#each post.tags as tag (tag)} <span class="tag">{tag}</span> {/each}
         </span>
     </div>
 {/snippet}
@@ -23,10 +28,12 @@
 {/each}
 
 <style>
-span span {
+span .tag {
     border: 1px solid black;
     margin: 0 2px 0 0;
     padding: 0 2px 0 2px;
 }
-
+h3 {
+    display: inline-block;
+}
 </style>
