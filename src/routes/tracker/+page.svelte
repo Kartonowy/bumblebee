@@ -3,7 +3,6 @@
 
     const { data } = $props();
 
-    const medias: Media[]  = data.media;
 </script>
 <h2>Media I've consumed this year</h2>
 
@@ -14,7 +13,7 @@
 {#each ["anime", "books", "games", "manga", "movies", "series"] as category (category)}
     <h2>Category: {category}</h2>
     <div class="shelf">
-    {#each medias.filter(m => m.type === category) as media (media.url)}
+    {#each data.media.filter(m => m.type === category) as media (media.url)}
             {@render media_snippet(media)}
     {/each}
     </div>

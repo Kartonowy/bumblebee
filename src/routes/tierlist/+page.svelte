@@ -5,14 +5,6 @@
     let search = $state("");
     let hovered: Card | null = $state(null);
 
-    // horrid i know
-    let cards: { "SSS": Card[], "SS": Card[], "S": Card[], "A": Card[], "B": Card[], "C": Card[], "D": Card[], "E": Card[], "F": Card[], [key: string]: Card[] } 
-    = { "SSS": [], "SS": [], "S": [], "A": [], "B": [], "C": [], "D": [], "E": [], "F": [] };
-
-    for (const rank in cards) {
-        cards[rank] = data.cards.filter((card) => card.rank === rank)
-    }
-
 </script>
 
 {#snippet card_snippet(card: Card)}
@@ -28,7 +20,7 @@
 {#each ["SSS", "SS", "S", "A", "B", "C", "D", "E", "F"] as tier (tier)}
     <h2>Tier: {tier}</h2>
     <div class="shelf">
-    {#each cards[tier] as card (card.url)}
+    {#each data.cards.filter((card) => card.rank === tier) as card (card.url)}
         {#if card.name?.toLowerCase().includes(search.toLowerCase()) || card.series?.toLowerCase().includes(search.toLowerCase())}
             {@render card_snippet(card)}
         {/if}
