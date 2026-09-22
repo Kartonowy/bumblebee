@@ -34,16 +34,12 @@ If any of the images don't work, tell me; I know about dagger, league and terrar
 If you want to discuss any of the placements or suggest your own characters to add to the tierlist, come chat with me!
 
 <style>
-* {
-    color: var(--text)
-}
     .card {
         height: 130px;
         /* background-color: var(--foreground); */
     }
     main {
         position:fixed;
-        background-color: var(--background);
         padding: 10px 25px 10px 25px;
     }
     section {

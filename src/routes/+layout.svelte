@@ -3,6 +3,10 @@
 
 	let { data, children } = $props();
 
+	function toggle() {
+		window.document.body.classList.toggle("dark")
+	}
+
 </script>
 
 <svelte:head>
@@ -26,6 +30,10 @@
     	<a href={resolve("/dashboard/edit/tracker", {})}>Edit tracker</a>
     	<a href={resolve("/dashboard/edit/blog", {})}>Edit blog</a>
 	{/if}
+
+	<label for="darkmode">
+		Dark Mode <input type="checkbox" name="darkmode" id="darkmode" onclick={toggle} />
+	</label>
 </nav>
 
 {@render children()}
@@ -51,8 +59,13 @@
 			color: var(--text)
 		}
 	}
-	:global(body) {
-		background: var(--background);
+	:global(body.dark) {
+		background: #181818;
+		color: beige;
+	}
+	:global(body.dark a:visited, body.dark a) {
+		background: #181818;
+		color: beige;
 	}
 
 	nav {
