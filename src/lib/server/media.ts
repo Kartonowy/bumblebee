@@ -5,7 +5,7 @@ import { tracker } from "./db/schema";
 
 export const addMedia = async (media: Media) => {
     const exists = await db.select().from(tracker)
-        .where(sql`${media.name} = tracker.name AND ${media.year.getFullYear()} = strftime('%Y', tracker.year);`);
+        .where(sql`${media.name} = tracker.name AND ${media.url} = tracker.url`);
 
     if (exists.length > 0) {
         throw new Error("This item was already found.");

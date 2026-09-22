@@ -12,3 +12,11 @@ export type Media = {
 	url: string,
 	year: Date 
 }
+
+export type Post = {
+	title: string,
+	content: string,
+	language: "en" | "pl" | "jp",
+	tags: string[] | null,
+	published: boolean | null
+}

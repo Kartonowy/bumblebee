@@ -13,29 +13,29 @@
         year: new Date()
     });
 
-    let mode = $state("Add");
+    let mode = $state("Adding");
     let identifier = $state("");
 
     const handleMode = (_mode: string) => {
         mode = _mode;
-        if (_mode === "Edit") {identifier = form_media.name + ";&:" + form_media.url} else identifier = ""
+        if (_mode === "Editing") {identifier = form_media.name + ";&:" + form_media.url} else identifier = ""
     }
-    const resetForm = () => { form_media.name = ""; form_media.url = ""; form_media.type = "anime";  mode = "Add" }
+    const resetForm = () => { form_media.name = ""; form_media.url = ""; form_media.type = "anime";  mode = "Adding" }
 </script>
 
 {#snippet media_snippet(media: Media)}
-    <button onmousedown={() => {form_media = media}}><img src={media.url} alt={media.name}/></button>
+    <button onmousedown={() => {handleMode("Editing"); form_media = media; }}><img src={media.url} alt={media.name}/></button>
 {/snippet}
 
 <main>
 
 <aside class="first">
-<form method="POST" action={mode === "Edit" ? "?/editMedia" : mode === "Remove" ? "?/removeMedia" : "?/addMedia"} use:enhance>
+<form method="POST" action={mode === "Editing" ? "?/editMedia" : mode === "Removing" ? "?/removeMedia" : "?/addMedia"} use:enhance>
     <h4>{mode} a card</h4>
-    {#if mode === "Edit"}
+    {#if mode === "Editing"}
     <input type="hidden" name="identifier" bind:value={identifier}/>
     {/if}
-    {#if mode === "Remove"}
+    {#if mode === "Removing"}
     <input type="text" name="identifier" bind:value={identifier} placeholder="Are you sure?"/>
     {/if}
     <input type="text" name="medianame" autocomplete="off" placeholder="Media name" required bind:value={form_media.name}/>
@@ -48,20 +48,21 @@
         <option value="movies">movies</option>
         <option value="series">series</option>
     </select>
-    <button>Submit</button><button onclick={resetForm}>Clear</button>
-
-    <span>Message: {form?.message || form?.error}</span>
+    <span>
+        <button>Submit</button>
+        <button onclick={resetForm} formaction={undefined}>Clear</button> 
+        {#if form_media.name !== "" }
+            <button onclick={() => handleMode("Removing")} formaction={undefined}>Removing</button>
+        {/if}
+    </span>
 
 </form>
+<span>Message: {form?.message || form?.error}</span>
 
 <div>
     <img src={form_media.url} alt={form_media.name}>
     <h3>{form_media.name}</h3>
     <input type="text" class="search" bind:value={search} >
-{#if form_media.name !== "" }
-    <button onclick={() => handleMode("Edit")}>Edit</button>
-    <button onclick={() => handleMode("Remove")}>Remove</button>
-{/if}
 </div>
 
 
@@ -88,9 +89,6 @@
     display: flex;
     flex-flow: column wrap;
 }
-.first div, .first form {
-    height: 40vh;
-}
     main {
         display: flex;
         flex-flow: row wrap;
@@ -98,7 +96,7 @@
     form {
         display: flex;
         flex-flow: column wrap;
-        width: 20%;
+        width: 25%;
         padding-right: 30%;
     }
     aside {
@@ -111,8 +109,5 @@
         height: 150px;
         width: 100px;
         object-fit: cover;
-    }
-    span {
-        border: 1px black solid;
     }
 </style>

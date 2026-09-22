@@ -19,10 +19,12 @@
 	<a href={resolve("/", {})}>Home</a>
 	<a href={resolve("/tierlist", {})} data-sveltekit-preload-data>Tierlist</a>
 	<a href={resolve("/tracker", {})} data-sveltekit-preload-data>Tracker</a>
+	<a href={resolve("/blog", {})} data-sveltekit-preload-data>Blog</a>
 	<a href={resolve("/dashboard", {})}>Dashboard</a>
 	{#if data.logged}
     	<a href={resolve("/dashboard/edit/tierlist", {})}>Edit tierlist</a>
     	<a href={resolve("/dashboard/edit/tracker", {})}>Edit tracker</a>
+    	<a href={resolve("/dashboard/edit/blog", {})}>Edit blog</a>
 	{/if}
 </nav>
 
