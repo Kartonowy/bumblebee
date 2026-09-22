@@ -12,7 +12,7 @@
 {/snippet}
 
 
-<main>
+<main class="topbar">
     <input type="text" bind:value={search} placeholder="search"/> Hovering: {hovered ? `${hovered.name} from ${hovered.series}` : "nothing"}
 </main>
 

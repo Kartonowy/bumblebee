@@ -68,6 +68,16 @@
 		color: beige;
 	}
 
+	:global(body .topbar) {
+		background: #ffffff;
+		color: #000000;
+	}
+
+	:global(body.dark .topbar) {
+		background: #181818;
+		color: beige;
+	}
+
 	nav {
 		padding: 0.5vh 0.5vw 0.5vh 0.5vw;
 	}
