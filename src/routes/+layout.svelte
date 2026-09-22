@@ -12,6 +12,7 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://hacunae.moe/" />
 	<meta property="og:image" content="https://akiragallery.com/cdn/shop/files/Emil_Vinyl_Decal_from_Nier_1200x.webp" />
+	<meta property="og:description" content="hacunae's website where he shares his projects and ideas. Come check out his tierlists or what media he likes!" />
 </svelte:head>
 
 <nav>
