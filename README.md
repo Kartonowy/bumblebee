@@ -1,42 +1,13 @@
-# sv
+It's just my website, so welcome
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Set the envs and run `deno task dev` to develop or something
 
-## Creating a project
+I have a custom deploy script which fetches `origin/deploy` and deploys it, so it's quite easy to add anything new.
 
-If you're seeing this, you've probably already done this step. Congrats!
+It's just `SvelteKit` with `sqlite3`, nothing too crazy.
 
-```sh
-# create a new project
-npx sv create my-app
-```
+I also don't vibecode, everything here was *handwritten*, even this .md.
 
-To recreate this project with the same configuration:
+Let people enjoy things.
 
-```sh
-# recreate this project
-deno x sv@0.17.0 create --template minimal --types ts --add eslint drizzle="database:sqlite+sqlite:better-sqlite3" better-auth="demo:password" --install deno bumblebee
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Might add some wasm or something later. cya

@@ -1,13 +1,17 @@
 <script lang="ts">
     import { resolve } from '$app/paths';
-	import favicon from '$lib/assets/favicon.svg';
 
 	let { data, children } = $props();
 
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+	<link rel="icon" href="https://akiragallery.com/cdn/shop/files/Emil_Vinyl_Decal_from_Nier_1200x.webp" />
+	<title>hacunae does moe!</title>
+	<meta property="og:title" content="hacunae's great website" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://hacunae.moe/" />
+	<meta property="og:image" content="https://akiragallery.com/cdn/shop/files/Emil_Vinyl_Decal_from_Nier_1200x.webp" />
 </svelte:head>
 
 <nav>
