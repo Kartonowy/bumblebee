@@ -109,6 +109,8 @@
     }
     aside {
         width: 50%;
+        overflow: scroll;
+        height: 100vh;
     }
     button {
         all: unset;

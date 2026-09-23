@@ -116,6 +116,8 @@
         width: 50%;
         display: flex;
         flex-flow: column wrap;
+        overflow: scroll;
+        height: 100vh;
     }
     button {
         all: unset;
