@@ -5,12 +5,14 @@ import { fail } from '@sveltejs/kit';
 import { db } from '$lib/server/db';
 import { tierlist_cards } from '$lib/server/db/schema';import { addCard, editCard, removeCard } from '$lib/server/cards';
 import type { Card } from '$lib';
+import { sql } from 'drizzle-orm';
 
 export const load: PageServerLoad = async (event) => {
 	if (!event.locals.user) {
 		return redirect(302, '/dashboard/login');
 	}
-    const cards = await db .select({
+    const cards = await db.select({
+		rowid: sql`rowid`,
         name: tierlist_cards.name,
         url: tierlist_cards.url,
         rank: tierlist_cards.rank,
@@ -27,6 +29,7 @@ export const actions: Actions = {
 		const data = await request.formData();
 
 		const card: Card = {
+			rowid: null,
 			name: data.get("cardname") as string,
 			series: data.get("cardseries") as string,
 			url: data.get("cardurl") as string,
@@ -48,10 +51,17 @@ export const actions: Actions = {
 
 	editCard: async ({ request }) => {
 		const data = await request.formData();
-		const identifier = data.get("identifier") as string;
-		const [name, series] = identifier.split(";&:");
+
+		const id = parseInt(data.get("identifier") as string);
+
+        if (isNaN(id)) {
+			return fail(422, {
+				error: "id is NaN" 
+			});
+        }
 
 		const card: Card = {
+			rowid: id,
 			name: data.get("cardname") as string,
 			series: data.get("cardseries") as string,
 			url: data.get("cardurl") as string,
@@ -60,7 +70,7 @@ export const actions: Actions = {
 		};
 		try {
 
-			const something = await editCard(name, series, card);
+			const something = await editCard(id, card);
 			return {
 				...something
 			}
@@ -73,22 +83,23 @@ export const actions: Actions = {
 	removeCard: async ({ request }) => {
 		const data = await request.formData();
 
-		const card: Card = {
-			name: data.get("cardname") as string,
-			series: data.get("cardseries") as string,
-			url: data.get("cardurl") as string,
-			rank: data.get("cardrank") as string,
-			explaination: data.get("cardexplaination") as string,
-		};
+		const id = parseInt(data.get("identifier") as string);
 
-		const confirm = data.get("identifier") as string;
+        if (isNaN(id)) {
+			return fail(422, {
+				error: "id is NaN" 
+			});
+        }
+
+		const confirm = data.get("consent") as string;
+
 		if (confirm !== "yes") {
 			return fail(403, {
 				message: "You didn't consent to removing this, try again."
 			})
 		}
 		try {
-			const something = await removeCard(card);
+			const something = await removeCard(id);
 			return {
 				...something
 			}

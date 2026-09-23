@@ -28,8 +28,8 @@
     }
 </script>
 
-{#snippet post_snippet(post: Post, rowid: number)}
-    <button onclick={() => {handleMode("Editing"); form_post = post; identifier = rowid }}>
+{#snippet post_snippet(post: Post)}
+    <button onclick={() => {handleMode("Editing"); form_post = post; identifier = post.rowid as number }}>
         <h3>{post.title} <span class="language">{post.language}</span> <span class="published">{post.published ? "✓" : "✗" }</span></h3>
         <p>{post.content.split(" ").slice(0, 15).join(" ")}</p>
         <span>
@@ -88,7 +88,7 @@
 <aside>
     {#each data.postList as post (post.rowid)}
         <!-- {#if card.name?.toLowerCase().includes(search.toLowerCase()) || card.series?.toLowerCase().includes(search.toLowerCase())} -->
-            {@render post_snippet(post, post.rowid as number)}
+            {@render post_snippet(post)}
         <!-- {/if} -->
     {/each}
 </aside>

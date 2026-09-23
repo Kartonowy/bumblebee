@@ -6,12 +6,16 @@ import { db } from '$lib/server/db';
 import { tracker } from '$lib/server/db/schema';
 import type {  Media } from '$lib';
 import { addMedia, editMedia, removeMedia } from '$lib/server/media';
+import { getTableColumns, sql } from 'drizzle-orm';
 
 export const load: PageServerLoad = async (event) => {
 	if (!event.locals.user) {
 		return redirect(302, '/dashboard/login');
 	}
-    const media = await db.select().from(tracker).orderBy(tracker.year);
+    const media = await db.select({
+		rowid: sql`rowid`,
+		...getTableColumns(tracker)
+	}).from(tracker).orderBy(tracker.year);
 
     return { media }
 };
@@ -26,7 +30,16 @@ export const actions: Actions = {
 			return fail(422, "wrong type")
 		}
 
+		const id = parseInt(data.get("identifier") as string);
+
+        if (isNaN(id)) {
+			return fail(422, {
+				error: "id is NaN" 
+			});
+        }
+
 		const media: Media = {
+			rowid: id,
 			name: data.get("medianame") as string,
 			url: data.get("mediaurl") as string,
 			type: type as "series" | "anime" | "books" | "games" | "manga" | "movies",
@@ -47,8 +60,14 @@ export const actions: Actions = {
 
 	editMedia: async ({ request }) => {
 		const data = await request.formData();
-		const identifier = data.get("identifier") as string;
-		const [name, url] = identifier.split(";&:");
+
+		const id = parseInt(data.get("identifier") as string);
+
+        if (isNaN(id)) {
+			return fail(422, {
+				error: "id is NaN" 
+			});
+        }
 
 		const type = data.get("mediatype") as string;
 
@@ -56,7 +75,9 @@ export const actions: Actions = {
 			return fail(422, "wrong type")
 		}
 
+
 		const media: Media = {
+			rowid: id,
 			name: data.get("medianame") as string,
 			url: data.get("mediaurl") as string,
 			type: type as "series" | "anime" | "books" | "games" | "manga" | "movies",
@@ -64,7 +85,7 @@ export const actions: Actions = {
 		};
 		try {
 
-			const something = await editMedia(name, url, media);
+			const something = await editMedia(id, media);
 
 			return {
 				...something
@@ -79,21 +100,26 @@ export const actions: Actions = {
 	removeMedia: async ({ request }) => {
 		const data = await request.formData();
 
-		const media: Media = {
-			name: data.get("medianame") as string,
-			url: data.get("mediaurl") as string,
-			type: data.get("mediarank") as "series" | "anime" | "books" | "games" | "manga" | "movies",
-			year: new Date()
-		};
 
-		const confirm = data.get("identifier") as string;
+
+		const id = parseInt(data.get("identifier") as string);
+
+        if (isNaN(id)) {
+			return fail(422, {
+				error: "id is NaN" 
+			});
+        }
+
+		const confirm = data.get("consent") as string;
+
 		if (confirm !== "yes") {
 			return fail(403, {
 				message: "You didn't consent to removing this, try again."
 			})
 		}
+
 		try {
-			const something = await removeMedia(media);
+			const something = await removeMedia(id);
 			return {
 				...something
 			}

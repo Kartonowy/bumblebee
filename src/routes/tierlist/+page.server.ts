@@ -1,9 +1,11 @@
 import type { PageServerLoad } from './$types';
 import { db } from '$lib/server/db';
 import { tierlist_cards } from '$lib/server/db/schema';
+import { sql } from 'drizzle-orm';
 
 export const load: PageServerLoad = async () => {
     const cards = await db .select({
+        rowid: sql`rowid`,
         name: tierlist_cards.name,
         url: tierlist_cards.url,
         rank: tierlist_cards.rank,

@@ -1,5 +1,5 @@
 import type { Media } from "$lib";
-import { and, eq, sql } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 import { db } from "./db";
 import { tracker } from "./db/schema";
 
@@ -23,9 +23,8 @@ export const addMedia = async (media: Media) => {
     }
 }
 
-export const editMedia = async (name: string, url: string,  media: Media) => {
-    const exists = await db.select().from(tracker)
-        .where(sql`${name} = tracker.name AND ${url} = tracker.url;`);
+export const editMedia = async (id: number,  media: Media) => {
+    const exists = await db.select().from(tracker).where(sql`${id} = rowid`)
 
     if (exists.length < 1) {
         throw new Error("This item was not found.");
@@ -40,16 +39,16 @@ export const editMedia = async (name: string, url: string,  media: Media) => {
         url: media.url,
         type: media.type,
         year: media.year 
-    }).where(and(eq(tracker.name, name), eq(tracker.url, url)));
+    }).where(sql`${id} = rowid`)
 
     return {
         message: `${media.name} edited!`
     }
 }
 
-export const removeMedia = async (media: Media) => {
+export const removeMedia = async (id: number) => {
     const exists = await db.select().from(tracker)
-        .where(sql`${media.name} = tracker.name AND ${media.url} = tracker.url`);
+        .where(sql`${id} = rowid`);
 
     if (exists.length < 1) {
         throw new Error("This item was not found.");
@@ -60,8 +59,8 @@ export const removeMedia = async (media: Media) => {
     }
 
     const result = await db.delete(tracker)
-    .where(and(eq(tracker.name, media.name), eq(tracker.url, media.url)))
-    .returning({ deletedName: tracker.name });
+        .where(sql`${id} = rowid`)
+        .returning({ deletedName: tracker.name });
 
     return {
         message: `${result[0].deletedName} removed!`

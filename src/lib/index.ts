@@ -1,4 +1,5 @@
 export type Card = {
+	rowid: number | null | unknown,
     name: string | null;
     url: string | null;
     rank: string | null;
@@ -7,6 +8,7 @@ export type Card = {
 }
 
 export type Media = {
+	rowid: number | null | unknown,
 	type: "anime" | "books" | "games" | "manga" | "movies" | "series",
 	name: string,
 	url: string,

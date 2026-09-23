@@ -13,7 +13,7 @@
 {#each ["anime", "books", "games", "manga", "movies", "series"] as category (category)}
     <h2>Category: {category}</h2>
     <div class="shelf">
-    {#each data.media.filter(m => m.type === category) as media (media.url)}
+    {#each data.media.filter(m => m.type === category) as media (media.rowid)}
             {@render media_snippet(media)}
     {/each}
     </div>

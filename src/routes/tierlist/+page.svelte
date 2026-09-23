@@ -20,7 +20,7 @@
 {#each ["SSS", "SS", "S", "A", "B", "C", "D", "E", "F"] as tier (tier)}
     <h2>Tier: {tier}</h2>
     <div class="shelf">
-    {#each data.cards.filter((card) => card.rank === tier) as card (card.url)}
+    {#each data.cards.filter((card) => card.rank === tier) as card (card.rowid)}
         {#if card.name?.toLowerCase().includes(search.toLowerCase()) || card.series?.toLowerCase().includes(search.toLowerCase())}
             {@render card_snippet(card)}
         {/if}

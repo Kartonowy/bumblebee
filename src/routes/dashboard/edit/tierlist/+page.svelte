@@ -7,6 +7,7 @@
     let search = $state("");
 
     let form_card: Card = $state({
+        rowid: null,
         name: "",
         series: "",
         url: "",
@@ -14,17 +15,25 @@
         explaination: ""
     });
     let mode = $state("Adding");
-    let identifier = $state("");
+    let identifier = $state(0);
 
     const handleMode = (_mode: string) => {
         mode = _mode;
-        if (_mode === "Editing") {identifier = form_card.name + ";&:" + form_card.series} else identifier = ""
     }
-    const resetForm = () => { form_card.name = ""; form_card.rank = ""; form_card.series = ""; form_card.url = ""; form_card.explaination = "";  mode = "Adding" }
+    const resetForm = () => {
+        form_card.name = "";
+        form_card.rank = "";
+        form_card.series = "";
+        form_card.url = "";
+        form_card.explaination = "";
+        mode = "Adding" 
+    }
 </script>
 
 {#snippet card_snippet(card: Card)}
-    <button onclick={() => {handleMode("Editing"); form_card = card }} ><img src={card.url} alt={card.name} class="card"   /></button>
+    <button onclick={() => {
+        handleMode("Editing"); form_card = card; identifier = card.rowid as number
+        }} ><img src={card.url} alt={card.name} class="card"   /></button>
 {/snippet}
 
 <main>
@@ -36,7 +45,8 @@
     <input type="hidden" name="identifier" bind:value={identifier}/>
     {/if}
     {#if mode === "Removing"}
-    <input type="text" name="identifier" bind:value={identifier} placeholder="Are you sure?"/>
+    <input type="hidden" name="identifier" bind:value={identifier}/>
+    <input type="text" name="consent" placeholder="Are you sure?"/>
     {/if}
     <input type="text" name="cardname" autocomplete="off" placeholder="Card name" required bind:value={form_card.name}/>
     <input type="text" name="cardseries" autocomplete="off" placeholder="Card series" required bind:value={form_card.series}/>
@@ -67,7 +77,7 @@
 </aside>
 
 <aside>
-    {#each data.cards as card (card.url)}
+    {#each data.cards as card (card.rowid)}
         {#if card.name?.toLowerCase().includes(search.toLowerCase()) || card.series?.toLowerCase().includes(search.toLowerCase())}
             {@render card_snippet(card)}
         {/if}

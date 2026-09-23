@@ -7,6 +7,7 @@
     let search = $state("");
 
     let form_media: Media = $state({
+        rowid: null,
         name: "",
         url: "",
         type: "anime",
@@ -14,17 +15,25 @@
     });
 
     let mode = $state("Adding");
-    let identifier = $state("");
+    let identifier = $state(0);
 
     const handleMode = (_mode: string) => {
         mode = _mode;
-        if (_mode === "Editing") {identifier = form_media.name + ";&:" + form_media.url} else identifier = ""
     }
-    const resetForm = () => { form_media.name = ""; form_media.url = ""; form_media.type = "anime";  mode = "Adding" }
+    const resetForm = () => {
+        form_media.name = "";
+        form_media.url = "";
+        form_media.type = "anime";
+        mode = "Adding" 
+        }
 </script>
 
 {#snippet media_snippet(media: Media)}
-    <button onmousedown={() => {handleMode("Editing"); form_media = media; }}><img src={media.url} alt={media.name}/></button>
+    <button onmousedown={() => {
+        handleMode("Editing");
+         form_media = media; 
+        identifier = media.rowid as number;
+        }}><img src={media.url} alt={media.name}/></button>
 {/snippet}
 
 <main>
@@ -69,7 +78,7 @@
 </aside>
 
 <aside>
-    {#each data.media as media (media.url)}
+    {#each data.media as media (media.rowid)}
         {#if media.name?.toLowerCase().includes(search.toLowerCase())}
             {@render media_snippet(media)}
         {/if}
