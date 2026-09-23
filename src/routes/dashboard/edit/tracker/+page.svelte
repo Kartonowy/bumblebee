@@ -45,7 +45,8 @@
     <input type="hidden" name="identifier" bind:value={identifier}/>
     {/if}
     {#if mode === "Removing"}
-    <input type="text" name="identifier" bind:value={identifier} placeholder="Are you sure?"/>
+    <input type="hidden" name="identifier" bind:value={identifier}/>
+    <input type="text" name="consent" placeholder="Are you sure?"/>
     {/if}
     <input type="text" name="medianame" autocomplete="off" placeholder="Media name" required bind:value={form_media.name}/>
     <input type="text" name="mediaurl" autocomplete="off" placeholder="Media url" required bind:value={form_media.url}/>
