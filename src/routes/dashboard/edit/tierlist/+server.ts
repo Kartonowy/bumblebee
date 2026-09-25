@@ -1,5 +1,3 @@
-export const x = Math.floor(200) 
-
 import { json } from "@sveltejs/kit";
 import puppeteer from "puppeteer-extra"
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
