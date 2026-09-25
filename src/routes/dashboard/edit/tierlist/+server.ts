@@ -23,7 +23,6 @@ const fetchFandom = async (pageUrl: string) => {
 
     const titleSelector = await page.locator("#firstHeading").waitHandle();
     const title = (await titleSelector.evaluate(el => el.textContent)).trim()
-    console.log("xd")
 
     const seriesSelector = await page.locator(".fandom-community-header__community-name").waitHandle();
     const series = (await seriesSelector.evaluate(el => el.textContent.replace(" Wiki", ""))).trim()
@@ -45,7 +44,7 @@ export async function POST({ request }) {
     try {
         url = new URL(fandomUrl);
     } catch (err: any) {
-        console.log(err)
+        console.error(err)
         return json({}, { status: 422 });
     }
 

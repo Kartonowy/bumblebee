@@ -32,7 +32,6 @@
 
     const handleImportFandom = async () => {
         if (fandomUrl === "") return;
-        console.log()
         const response = await fetch('/dashboard/edit/tierlist', {
             method: "POST",
             body: JSON.stringify({ fandomUrl }),
@@ -40,7 +39,6 @@
                 'Content-Type': 'application/json'
             }
         });
-        console.log("a")
     const {title, series, preparedUrl} = await response.json();
 
     form_card.name = title;

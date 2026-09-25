@@ -5,6 +5,10 @@
     let search = $state("");
     let hovered: Card | null = $state(null);
 
+    let amount = $derived(data.cards.filter(card => {
+        return card.name?.toLowerCase().includes(search.toLowerCase()) || card.series?.toLowerCase().includes(search.toLowerCase())
+    }).length);
+
 </script>
 
 {#snippet card_snippet(card: Card)}
@@ -13,7 +17,7 @@
 
 
 <main class="topbar">
-    <input type="text" bind:value={search} placeholder="search"/> Hovering: {hovered ? `${hovered.name} from ${hovered.series}` : "nothing"}
+    <input type="text" bind:value={search} placeholder="search"/> Currently showing {amount} entries. Hovering: {hovered ? `${hovered.name} from ${hovered.series}` : "nothing"}
 </main>
 
 <section>
