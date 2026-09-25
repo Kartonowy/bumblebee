@@ -5,6 +5,7 @@
     const { data, form } = $props();
 
     let search = $state("");
+    let fandomUrl = $state("");
 
     let form_card: Card = $state({
         rowid: null,
@@ -28,6 +29,25 @@
         form_card.explaination = "";
         mode = "Adding" 
     }
+
+    const handleImportFandom = async () => {
+        if (fandomUrl === "") return;
+        console.log()
+        const response = await fetch('/dashboard/edit/tierlist', {
+            method: "POST",
+            body: JSON.stringify({ fandomUrl }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log("a")
+    const {title, series, preparedUrl} = await response.json();
+
+    form_card.name = title;
+    form_card.series = series;
+    form_card.url = preparedUrl;
+
+    }
 </script>
 
 {#snippet card_snippet(card: Card)}
@@ -39,6 +59,11 @@
 <main>
 
 <aside class="first">
+
+<span>
+    <input type="text" name="fandom" bind:value={fandomUrl}> <button onclick={handleImportFandom} formaction={undefined}>Import fandom</button>
+</span>
+
 <form method="POST" action={mode === "Editing" ? "?/editCard" : mode === "Removing" ? "?/removeCard" : "?/addCard"} use:enhance>
     <h4>{mode} a card</h4>
     {#if mode === "Editing"}

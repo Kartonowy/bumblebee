@@ -108,5 +108,5 @@ export const actions: Actions = {
 				error: error!.message
 			});
 		}
-	},
+	}
 };
