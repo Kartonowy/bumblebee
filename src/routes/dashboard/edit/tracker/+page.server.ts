@@ -30,16 +30,9 @@ export const actions: Actions = {
 			return fail(422, "wrong type")
 		}
 
-		const id = parseInt(data.get("identifier") as string);
-
-        if (isNaN(id)) {
-			return fail(422, {
-				error: "id is NaN" 
-			});
-        }
 
 		const media: Media = {
-			rowid: id,
+			rowid: null,
 			name: data.get("medianame") as string,
 			url: data.get("mediaurl") as string,
 			type: type as "series" | "anime" | "books" | "games" | "manga" | "movies",
