@@ -34,7 +34,7 @@
     <hr>
 {/each}
 </section>
-If any of the images don't work, tell me; I know about dagger, league and terraria atm, and will fix them soon. <br>
+If any of the images don't work, let me know. <br>
 If you want to discuss any of the placements or suggest your own characters to add to the tierlist, come chat with me!
 
 <style>
