@@ -74,7 +74,35 @@
     <input type="text" name="cardname" autocomplete="off" placeholder="Card name" required bind:value={form_card.name}/>
     <input type="text" name="cardseries" autocomplete="off" placeholder="Card series" required bind:value={form_card.series}/>
     <input type="text" name="cardurl" autocomplete="off" placeholder="Card url" required bind:value={form_card.url}/>
-    <input type="text" name="cardrank" autocomplete="off" placeholder="Card rank" required bind:value={form_card.rank}/>
+    <span>
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <span class={form_card.rank === "SSS" ? "selected" : ""} onclick={() => { form_card.rank = "SSS" }}>SSS</span>
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <span class={form_card.rank === "SS" ? "selected" : ""} onclick={() => { form_card.rank = "SS" }}>SS</span>
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <span class={form_card.rank === "S" ? "selected" : ""} onclick={() => { form_card.rank = "S" }}>S</span>
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <span class={form_card.rank === "A" ? "selected" : ""} onclick={() => { form_card.rank = "A" }}>A</span>
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <span class={form_card.rank === "B" ? "selected" : ""} onclick={() => { form_card.rank = "B" }}>B</span>
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <span class={form_card.rank === "C" ? "selected" : ""} onclick={() => { form_card.rank = "C" }}>C</span>
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <span class={form_card.rank === "D" ? "selected" : ""} onclick={() => { form_card.rank = "D" }}>D</span>
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <span class={form_card.rank === "E" ? "selected" : ""} onclick={() => { form_card.rank = "E" }}>E</span>
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <span class={form_card.rank === "F" ? "selected" : ""} onclick={() => { form_card.rank = "F" }}>F</span>
+    </span>
     <textarea name="cardexplaination" autocomplete="off" placeholder="Explaination on placement" bind:value={form_card.explaination}></textarea>
     <span>
         <button>Submit</button>
@@ -142,5 +170,23 @@
         height: 150px;
         width: 100px;
         object-fit: cover;
+    }
+    span {
+        padding: 0 1px 0 1px;
+        margin: 0 1px 0 1px;
+        cursor: pointer;
+        display: flex;
+    }
+    span span {
+        width: 2rem;
+        height: 2rem;
+        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .selected {
+        outline: 1px solid black;
+        border-collapse: collapse;
     }
 </style>
