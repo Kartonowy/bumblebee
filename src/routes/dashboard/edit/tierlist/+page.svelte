@@ -74,6 +74,7 @@
     <input type="text" name="cardname" autocomplete="off" placeholder="Card name" required bind:value={form_card.name}/>
     <input type="text" name="cardseries" autocomplete="off" placeholder="Card series" required bind:value={form_card.series}/>
     <input type="text" name="cardurl" autocomplete="off" placeholder="Card url" required bind:value={form_card.url}/>
+    <input type="hidden" name="cardrank" bind:value={form_card.rank}>
     <span>
         <!-- svelte-ignore a11y_click_events_have_key_events -->
         <!-- svelte-ignore a11y_no_static_element_interactions -->
