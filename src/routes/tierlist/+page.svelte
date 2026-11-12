@@ -34,8 +34,9 @@
     <hr>
 {/each}
 </section>
-If any of the images don't work, let me know. <br>
-If you want to discuss any of the placements or suggest your own characters to add to the tierlist, come chat with me!
+If any of the images of the characters you know don't work, let me know. <br>
+Consider that character may not have any official art, for example ORV 999th turn older gods <br>
+If you want to discuss any of the placements or suggest your own characters to add to the tierlist, come chat with me! I'm happy to change the placings
 
 <style>
     .card {
